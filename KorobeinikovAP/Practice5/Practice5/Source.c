@@ -12,8 +12,6 @@
 
 
 
-#include <vcruntime_string.h>
-#include <corecrt_wstring.h>
 
 WIN32_FIND_DATA names[MAX_PATH];
 WIN32_FIND_DATA File;
@@ -21,7 +19,10 @@ HANDLE hfile;
 
 void bubble_sort(int size[], int quantity);
 void Insert(int b[], int N);
-void merge(int *a, int n);
+
+void merge(int get[], int l, int mid, int r);
+void merge_sort(int a[], int N);
+void merge_sort_lr(int a[], int l, int r);
 
 void swap(int* a, int* b);
 
@@ -37,6 +38,7 @@ int Index(int size1[], int size[], int quantity, int k);
 
 int main()
 {
+	printf("1\n");
 	setlocale(LC_ALL, "Russian");
 	int i = 0, k;
 	int ind[200];
@@ -53,24 +55,7 @@ int main()
 
 	Input();
 
-	printf("Data in your directory: \n");
-	printf("Names: %50c Size(Bytes):\n", ' ');
-	do {
-		if ((i == 0) || (i == 1)) {
-			i++;
-			continue;
-		}
-		names[i] = File;
-		fname[i] = names[i].cFileName;
-		size[i] = names[i].nFileSizeLow;
-		size1[i] = names[i].nFileSizeLow;//size of file
-		printf("\n%-60S", fname[i]);//name of file
-		if (size[i] == 0)
-			printf("This is a folder, the size is undefined\n");
-		else
-			printf("%d  \n", (size[i]));
-		i++;
-	} while (FindNextFileW(hfile, &File) != NULL);
+	f_main_work(names,fname,size,size1);
 
 	Sorting(size1, size, fname, i);
 
@@ -122,7 +107,7 @@ void Sorting(int size1[], int size[], wchar_t** fname[], int i)
 			else if (n == 2)
 				Insert(size1, i);
 			else if (n == 3)
-				merge(size1, i - 3);
+				merge_sort (size1, i);
 
 			do
 			{
@@ -234,48 +219,92 @@ void swap(int* a, int* b)
 
 
 
-void merge(int *a, int n)
+void merge(int get[],  int l, int mid, int r)  
 {
-	int mid = n / 2;
-	if (n % 2 == 1)
-		mid++;
-	int h = 1;
-	int *c = (int*)malloc(n * sizeof(int));
-	int step;
-	while (h < n)
+	int k = 0, i = 0, j = 0;
+	int N = mid - l;
+	int M = r - mid + 1;
+
+	int* c = (int*)malloc((r - l + 1) * sizeof(int));
+	
+	i = l;
+	j = mid;
+	while (((i - l) < N) && ((j - mid) < M))
 	{
-		step = h;
-		int i = 0;
-		int j = mid;
-		int k = 0;
-		while (step <= mid)
-		{
-			while ((i < step) && (j < n) && (j < (mid + step)))
-			{ 
-				if (a[i] < a[j])
-				{
-					c[k] = a[i];
-					i++; k++;
-				}
-				else {
-					c[k] = a[j];
-					j++; k++;
-				}
-			}
-			while (i < step)
-			{
-				c[k] = a[i];
-				i++; k++;
-			}
-			while ((j < (mid + step)) && (j < n))
-			{
-				c[k] = a[j];
-				j++; k++;
-			}
-			step = step + h;
+		if (get[i] < get[j]) {
+			c[k] = get[i];
+			k++;
+			i++;
 		}
-		h = h * 2;
-		for (i = 0; i < n; i++)
-			a[i] = c[i];
+		else
+		{
+			c[k] = get[j];
+			k++;
+			j++;
+		}
 	}
+	while ((i - l) < N)
+	{
+		c[k] = get[i];
+		k++;
+		i++;
+	}
+	while ((j - mid) < M)
+	{
+		c[k] = get[j];
+		k++;
+		j++;
+	}
+
+	for (i = l; i < r + 1; i++)
+	{
+		get[i] = c[i - l];
+	}
+}
+
+
+
+
+void merge_sort(int a[], int N)
+{
+
+	merge_sort_lr(a, 0, N - 1);
+}
+
+
+
+
+void merge_sort_lr(int a[],  int l, int r)
+{
+	int mid;
+	if (l >= r)
+		return;
+	mid = l + (r - l) / 2;
+	merge_sort_lr(a, l, mid);
+	merge_sort_lr(a,  mid + 1, r);
+	merge(a, l, mid + 1, r);
+}
+
+
+
+
+f_main_work(wchar_t** fname, int* size, int* size1) {
+	printf("Data in your directory: \n");
+	printf("Names: %50c Size(Bytes):\n", ' ');
+	do {
+		if ((i == 0) || (i == 1)) {
+			i++;
+			continue;
+		}
+		names[i] = File;
+		fname[i] = names[i].cFileName;
+		size[i] = names[i].nFileSizeLow;
+		size1[i] = names[i].nFileSizeLow;//size of file
+		printf("\n%-60S", fname[i]);//name of file
+		if (size[i] == 0)
+			printf("This is a folder, the size is undefined\n");
+		else
+			printf("%d  \n", (size[i]));
+		i++;
+	} while (FindNextFileW(hfile, &File) != NULL);
 }
