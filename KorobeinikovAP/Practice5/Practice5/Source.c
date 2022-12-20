@@ -17,14 +17,17 @@ WIN32_FIND_DATA names[MAX_PATH];
 WIN32_FIND_DATA File;
 HANDLE hfile;
 
-void bubble_sort(int size[], int quantity);
+int F_main_work(wchar_t** fname[], int* size, int* size1);
+void F_init(int* ind, wchar_t** fname[]);
+
+void Bubble_sort(int size[], int quantity);
 void Insert(int b[], int N);
 
-void merge(int get[], int l, int mid, int r);
-void merge_sort(int a[], int N);
-void merge_sort_lr(int a[], int l, int r);
+void Merge(int get[], int l, int mid, int r);
+void Merge_sort(int a[], int N);
+void Merge_sort_lr(int a[], int l, int r);
 
-void swap(int* a, int* b);
+void Swap(int* a, int* b);
 
 void Input();
 void Sorting(int size1[], int size[], wchar_t** fname[], int i);
@@ -35,32 +38,21 @@ int Index(int size1[], int size[], int quantity, int k);
 
 
 
-
 int main()
 {
-	printf("1\n");
 	setlocale(LC_ALL, "Russian");
 	int i = 0, k;
 	int ind[200];
 	int* size = (int*)malloc(200 * sizeof(int));
 	int* size1 = (int*)malloc(200 * sizeof(int));
-	wchar_t** fname = (wchar_t**)malloc(MAX_PATH * sizeof(wchar_t*));
-	for (int i = 0; i < MAX_PATH; i++) {
-		fname[i] = (wchar_t*)malloc(200 * sizeof(wchar_t));
-		fname[i] = L" ";
-	}
-	for (int i = 0; i < 200; i++) {
-		ind[i] = i;
-	}
-
+	wchar_t** fname = (wchar_t**)malloc(MAX_PATH * sizeof(wchar_t*));	
+	F_init(ind, fname);
 	Input();
-
-	f_main_work(names,fname,size,size1);
-
+	i = F_main_work(fname,size,size1);
 	Sorting(size1, size, fname, i);
-
 	return 0;
 }
+
 
 
 
@@ -103,11 +95,11 @@ void Sorting(int size1[], int size[], wchar_t** fname[], int i)
 		{
 			start = clock();
 			if (n == 1)
-				bubble_sort(size1, i);
+				Bubble_sort(size1, i-1);
 			else if (n == 2)
-				Insert(size1, i);
+				Insert(size1, i-1);
 			else if (n == 3)
-				merge_sort (size1, i);
+				Merge_sort (size1, i-1);
 
 			do
 			{
@@ -175,12 +167,12 @@ int Index(int size1[], int size[], int quantity, int k)
 
 
 
-void bubble_sort(int size[], int quantity) {
+void Bubble_sort(int size[], int quantity) {
 	int i, j;
 	for (i = 0; i < quantity; i++) {
 		for (j = 0; j < quantity - i; j++) {
 			if (size[j + 1] < size[j]) {
-				swap(&size[j + 1], &size[j]);
+				Swap(&size[j + 1], &size[j]);
 			}
 		}
 	}
@@ -196,7 +188,7 @@ void Insert(int size[], int quantity)
 		j = i - 1;
 		while ((j >= 0) && (size[j] > tmp))
 		{
-			swap(&size[j + 1], &size[j]);
+			Swap(&size[j + 1], &size[j]);
 			j--;
 		}
 
@@ -205,7 +197,7 @@ void Insert(int size[], int quantity)
 
 
 
-void swap(int* a, int* b)
+void Swap(int* a, int* b)
 {
 	int tmp = *a;
 	*a = *b;
@@ -219,7 +211,7 @@ void swap(int* a, int* b)
 
 
 
-void merge(int get[],  int l, int mid, int r)  
+void Merge(int get[],  int l, int mid, int r)  
 {
 	int k = 0, i = 0, j = 0;
 	int N = mid - l;
@@ -265,30 +257,31 @@ void merge(int get[],  int l, int mid, int r)
 
 
 
-void merge_sort(int a[], int N)
+void Merge_sort(int a[], int N)
 {
 
-	merge_sort_lr(a, 0, N - 1);
+	Merge_sort_lr(a, 0, N - 1);
 }
 
 
 
 
-void merge_sort_lr(int a[],  int l, int r)
+void Merge_sort_lr(int a[],  int l, int r)
 {
 	int mid;
 	if (l >= r)
 		return;
 	mid = l + (r - l) / 2;
-	merge_sort_lr(a, l, mid);
-	merge_sort_lr(a,  mid + 1, r);
-	merge(a, l, mid + 1, r);
+	Merge_sort_lr(a, l, mid);
+	Merge_sort_lr(a,  mid + 1, r);
+	Merge(a, l, mid + 1, r);
 }
 
 
 
 
-f_main_work(wchar_t** fname, int* size, int* size1) {
+int F_main_work(wchar_t** fname[], int* size, int* size1) {
+	int i = 0;
 	printf("Data in your directory: \n");
 	printf("Names: %50c Size(Bytes):\n", ' ');
 	do {
@@ -307,4 +300,18 @@ f_main_work(wchar_t** fname, int* size, int* size1) {
 			printf("%d  \n", (size[i]));
 		i++;
 	} while (FindNextFileW(hfile, &File) != NULL);
+	return i;
+}
+
+
+void F_init(int* ind, wchar_t** fname[]) {
+	int i;
+	for (int i = 0; i < MAX_PATH; i++) {
+		fname[i] = (wchar_t*)malloc(200 * sizeof(wchar_t));
+		fname[i] = L" ";
+	}
+	for (int i = 0; i < 200; i++) {
+		ind[i] = i;
+	}
+
 }
