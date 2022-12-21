@@ -80,7 +80,7 @@ void Input()
 
 void Sorting(int size1[], int size[], wchar_t** fname[], int i)
 {
-	int k, n, r, index;
+	int j, k, n, r, index;
 	clock_t start, end;
 	double elapsed;
 
@@ -91,15 +91,18 @@ void Sorting(int size1[], int size[], wchar_t** fname[], int i)
 	} while ((n < 0) || (n > 3));
 	while (n != 0)
 	{
+		for (j = 0; j < i; j++) {
+			size1[j] = size[j];
+		}
 		if (n != 0)
 		{
 			start = clock();
 			if (n == 1)
 				Bubble_sort(size1, i-1);
 			else if (n == 2)
-				Insert(size1, i-1);
+				Insert(size1, i);
 			else if (n == 3)
-				Merge_sort (size1, i-1);
+				Merge_sort (size1, i);
 
 			do
 			{
