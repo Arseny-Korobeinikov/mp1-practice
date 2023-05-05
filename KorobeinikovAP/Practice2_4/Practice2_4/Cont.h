@@ -2,6 +2,8 @@
 
 #define CONT_H
 
+#include 
+
 template <typename T>
 class TCont {
 private:
@@ -9,10 +11,12 @@ private:
 	T* el;
 	int maxsize;
 	int step;
+	int pos;
 public:
-	TCont(int maxsize, int step) {
+	TCont(int size, int maxsize, int step) {
 		this->maxsize = maxsize;
 		this->step = step;
+		this->pos = 
 	}
 	TCont(const TCont& Container) {
 		size = Container.size;

@@ -1,10 +1,11 @@
 #include "Cont.h"
-#include
-#include
+#include "Receipt.h"
+#include "Product.h"
 #include
 
 
 
 int main () {
+
 
 }

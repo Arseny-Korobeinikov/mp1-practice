@@ -2,6 +2,7 @@
 
 #define RECEIPT_H
 #include "Cont.h"
+#include "Product.h"
 
 
 class Receipt {
@@ -12,12 +13,15 @@ class Receipt {
 };
 
 struct TDate {
-
-
+	int year;
+	int month;
+	int day;
 };
  
 struct TTime {
-
+	int hour;
+	int minute;
+	int second;
 };
 #endif 
 
