@@ -66,8 +66,16 @@ public:
 		return *this;
 	}
 
-
-
+	TCont operator+(const TCont& _cnt) {
+		int i;
+		TCont<T> tmp(pos + _cnt.pos + step);
+		for (i = 0; i <= pos; i++)
+			tmp.el[i] = el[i];
+		tmp.pos = pos;
+		for (i = 0; i <= _cnt.pos; i++)
+			tmp.Insert(_cnt.el[i]);
+		return tmp;
+	}
 
 	int GetSize() {
 		return size;
@@ -104,6 +112,14 @@ public:
 		}
 	}
 
+	int Find(const T& obj) {
+		for (int i = 0; i < size; i++) {
+			if (el[i] == obj) {
+				return i
+			}
+		}
+		return (-1);
+	}
 
 };
 

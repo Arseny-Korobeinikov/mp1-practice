@@ -22,22 +22,13 @@ private:
 	TProduct product;
 public:
 	TReceiptLine();
-
 	TReceiptLine(const TProduct& _product);
-
 	void AddProduct();
-
 	void DeleteProduct();
-
 	int GetK();
-
 	float GetSum();
-
 	string GetNamepr();
-
-
 	void Print() ;
-
 };
 
 #endif 

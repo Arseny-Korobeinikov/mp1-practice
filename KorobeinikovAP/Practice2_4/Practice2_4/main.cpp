@@ -19,7 +19,8 @@ int main () {
 	TCont<TProduct> Base;
 	Base = ReadFileBase("base.txt");
 
-	f_work(Base);
+	TCont<TReceipt> checks;
+	checks = f_work(Base);
 
 	return 0;
 }

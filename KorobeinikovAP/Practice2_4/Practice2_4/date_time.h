@@ -26,17 +26,8 @@ struct TDate {
 	int year;
 	int month;
 	int day;
-	TDate() {
-		auto now = chrono::system_clock::now();
-		auto now_time_t = chrono::system_clock::to_time_t(now);
-		auto now_tm = *localtime(&now_time_t);
-		year = now_tm.tm_year + 1900;
-		month = now_tm.tm_mon + 1;
-		day = now_tm.tm_mday;
-	}
-	void Print() {
-		cout << setfill('0') << setw(2) << day << '.' << setfill('0') << setw(2) << month << '.' << year;
-	}
+	TDate();
+	void Print();
 	friend ostream& operator<<(ostream& out, const TDate& date) {
 		out << setfill('0') << setw(2) << date.day << '.' << setfill('0') << setw(2) << date.month << '.' << date.year;
 		return out;
@@ -51,17 +42,8 @@ struct TTime {
 	int minute;
 	int second;
 
-	TTime() {
-		auto now = chrono::system_clock::now();
-		auto now_time_t = chrono::system_clock::to_time_t(now);
-		auto now_tm = *localtime(&now_time_t);
-		hour = now_tm.tm_hour;
-		minute = now_tm.tm_min;
-		second = now_tm.tm_sec;
-	}
-	void Print() {
-		cout << setfill('0') << setw(2) << hour << ':' << setfill('0') << setw(2) << minute << ':' << setfill('0') << setw(2) << second;
-	}
+	TTime();
+	void Print();
 	friend ostream& operator<<(ostream& out, const TTime& time) {
 		out << setfill('0') << setw(2) << time.hour << ':' << setfill('0') << setw(2) << time.minute << ':'
 			<< setfill('0') << setw(2) << time.second;

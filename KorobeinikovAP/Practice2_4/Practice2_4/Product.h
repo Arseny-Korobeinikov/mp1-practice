@@ -19,41 +19,13 @@ private:
 	string name;
 	float cost;
 public:
-	TProduct() {}
-
-	TProduct(string code, string name, float cost) {
-		this->code = code;
-		this->cost = cost;
-		this->name = name;
-	}
-
-	TProduct(const TProduct& pr) {
-		code = pr.code;
-		name = pr.code;
-		cost = pr.cost;
-	}
-
-	float GetCost() const{
-		return cost;
-	}
-
-	string GetName() const{
-		return name;
-	}
-
-	string GetCode() const{
-		return code;
-	}
-
-	TProduct operator=(const TProduct& pr) {
-		code = pr.code;
-		name = pr.code;
-		cost = pr.cost;
-		return (*this);
-	}
-
-
-	
+	TProduct();
+	TProduct(string code, string name, float cost);
+	TProduct(const TProduct& pr);
+	float GetCost() const;
+	string GetName() const;
+	string GetCode() const;
+	TProduct operator=(const TProduct& pr);	
 };
 
 #endif 

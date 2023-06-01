@@ -40,7 +40,7 @@ TProduct ReadProductEntity(ifstream& file);
 
 TProduct ScanProduct(TCont<TProduct> Base);
 
-void f_work(TCont<TProduct> Base);
+TCont<TReceipt> f_work(TCont<TProduct> Base);
 
 
 #endif 

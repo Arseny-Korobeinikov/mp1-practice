@@ -65,17 +65,19 @@ TProduct ScanProduct(TCont<TProduct> Base) {
 }
 
 
-void f_work(TCont<TProduct> Base) {
+TCont<TReceipt> f_work(TCont<TProduct> Base) {
+	TCont<TReceipt> checks;
+
 	while (1) {
 		cout << "Welcome! Scan your products" << endl;
 		TProduct current_pr = ScanProduct(Base);
 		TReceipt chek;
 		chek.AddProduct(current_pr);
 		int flag = 1;
-		while (flag  == 1) {
+		while (flag == 1) {
 			cout << "Что вы желаете сделать? \n1 - Добавить товар в чек \n"
 				<< "2 - Удалить единицу товара из чека \n"
-				<<"3 - Закончить покупку и распечатать чек" << endl;
+				<< "3 - Закончить покупку и распечатать чек" << endl;
 			char h;
 			cin >> h;
 			switch (h)
@@ -93,13 +95,20 @@ void f_work(TCont<TProduct> Base) {
 			case '3': {
 				chek.output();
 				flag = 0;
+				checks.Insert(chek);
 				break;
 			}
-
-
 			default:
 				break;
 			}
 		}
+		cout << "Вы хотите выключить кассу? y/n" << endl;
+		char tmp;
+		cin >> tmp;
+		if (tmp == 'y') {
+			break;
+		}
 	}
+
+	return checks;	
 }
