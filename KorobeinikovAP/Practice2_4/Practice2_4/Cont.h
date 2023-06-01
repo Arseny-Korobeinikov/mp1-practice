@@ -1,13 +1,13 @@
 #ifndef CONT_H
 #define CONT_H
 
+#define _CRT_SECURE_NO_WARNINGS
 
 #include "Receipt.h"
 #include "Product.h"
-#include"Work.h"
 #include "ReceiptLine.h"
+#include "date_time.h"
 #include <string>
-#include <fstream>
 #include <iostream>
 
 using namespace std;
@@ -25,6 +25,7 @@ public:
 		size = 1;
 		step = 1;
 		pos = 0;
+		el = new T[size];
 	}
 
 	TCont(int size, int step) {
@@ -41,23 +42,39 @@ public:
 			el[i] = Container.el[i];
 		}
 		step = Container.step;
-		pos = size;
+		pos = Container.pos;
 	}
 
 	~TCont() {
-		free[] el;
+		delete []el;
 	}
 
 	T& operator [] (int index) const{
 		return (el[index]);
 	}
 
+
+	TCont operator=(const TCont& _cnt) {	
+		if (this != &_cnt) {
+			delete[] el;;
+			size = _cnt.size;
+			pos = _cnt.pos;
+			el = new T[size];
+			for (int i = 0; i < pos; i++)
+				el[i] = _cnt.el[i];
+		}
+		return *this;
+	}
+
+
+
+
 	int GetSize() {
 		return size;
 	}
 
 	void Insert(const T& obj) {
-		if (pos == size) {
+		if (pos+1 == size) {
 			resize();
 			pos++;
 			el[pos] = obj;

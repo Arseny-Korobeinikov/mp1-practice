@@ -1,14 +1,16 @@
 #ifndef RECEIPTLINE_H
+
 #define RECEIPTLINE_H
 
+#define _CRT_SECURE_NO_WARNINGS
 
 #include "Cont.h"
 #include "Receipt.h"
 #include "Product.h"
-#include"Work.h"
+#include "date_time.h"
 #include <string>
-#include <fstream>
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -16,39 +18,25 @@ using namespace std;
 class TReceiptLine {
 private:
 	int k;
-	int sum;
+	float sum;
 	TProduct product;
 public:
-	TReceiptLine() {
-		k = 0;
-		sum = 0;
-	}
+	TReceiptLine();
 
-	TReceiptLine(TProduct _product) {
-		k = 1;
-		sum = product.GetCost();
-		product = _product;
-	}
+	TReceiptLine(const TProduct& _product);
 
-	void AddProduct() {
-		k += 1;
-		sum += product.GetCost();
-	}
+	void AddProduct();
 
-	void DeleteProduct() {
-		k -= 1;
-		sum  -= product.GetCost();
-	}
+	void DeleteProduct();
 
-	int GetK() {
-		return k;
-	}
+	int GetK();
 
-	string GetNamepr() {
-		return product.GetName();
-	 }
+	float GetSum();
+
+	string GetNamepr();
 
 
+	void Print() ;
 
 };
 

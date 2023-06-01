@@ -21,6 +21,9 @@
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="ReceiptLine.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cont.h">
@@ -32,13 +35,13 @@
     <ClInclude Include="Product.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Work.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Receipt.cpp">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="ReceiptLine.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="date_time.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
